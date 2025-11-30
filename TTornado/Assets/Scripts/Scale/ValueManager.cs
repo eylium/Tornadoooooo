@@ -13,5 +13,6 @@ public static class ValueManager
 
     public static bool IsCounted;
 
+    public static Vector3 WorldMousePosition { get; set; }
 
 }

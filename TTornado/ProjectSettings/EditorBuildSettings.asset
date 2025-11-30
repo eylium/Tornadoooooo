@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MechanicPrototype.unity
     guid: f1667bd440b7ed84cb993abfefb08fe4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BigPrototype.unity
     guid: cea2eeecfa4e5904eadb65e63dd6e438
   m_configObjects:

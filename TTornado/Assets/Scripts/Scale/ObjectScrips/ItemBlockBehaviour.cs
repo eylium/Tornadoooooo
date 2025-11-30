@@ -63,8 +63,7 @@ public class ItemBlockBehaviour : MonoBehaviour
         //_elapsed += Time.fixedDeltaTime;
         //float duration = 10f;
         //float t = _elapsed / duration;
-
-        go.transform.SetParent(target.transform, true);
+        SetParent(go, target);
         float range = 1.87f;
         range = Random.Range(0, range);
         Vector3 targetPosition = new Vector3(target.transform.position.x, range, target.transform.position.z);
@@ -72,6 +71,11 @@ public class ItemBlockBehaviour : MonoBehaviour
         go.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPosition, maxSpeed * Time.fixedDeltaTime);
 
 
+    }
+
+    public void SetParent(GameObject go, GameObject target)
+    {
+        go.transform.SetParent(target.transform, true);
     }
 
     public void StartScale(GameObject go)

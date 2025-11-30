@@ -6,17 +6,17 @@ public class PlayerScript : MonoBehaviour
 {
 
 
-
-
-
     //public Variable
     [SerializeField]
     private float _cameraMovement;
+
+
     //[SerializeField]
     //private Material _baseMaterial;
 
     [SerializeField]
     private GameObject _cameraTarget;
+
 
     //Private Variables
     private CharacterController controller;
@@ -51,9 +51,9 @@ public class PlayerScript : MonoBehaviour
 
         int playerLayer = LayerMask.NameToLayer("player");
         int suckableLayer = LayerMask.NameToLayer("Suckable");
-      
+
         Physics.IgnoreLayerCollision(playerLayer, suckableLayer, true);
-     
+
 
         _mainCamera = Camera.main;
     }
@@ -76,7 +76,7 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate()
     {
 
- 
+
         //Movement
         isGrounded = GetComponent<CharacterController>().isGrounded;
         Walking();
@@ -102,8 +102,15 @@ public class PlayerScript : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector3 moveVetor = new Vector3(horizontal, 0f, vertical);
-        controller.Move((moveVetor * moveSpeed * Time.deltaTime));
+        //Vector3 moveVetor = new Vector3(horizontal, 0f, vertical);  
+
+        //Vector3 moveVetor = ValueManager.WorldMousePosition;
+        //Vector3 pos = Vector3.Lerp(transform.position, moveVetor, Time.deltaTime);
+
+        Vector3 pos = (ValueManager.WorldMousePosition-transform.position).normalized;
+        controller.Move((new Vector3(pos.x,0,pos.z) * moveSpeed * Time.deltaTime));
+
+
 
 
     }
