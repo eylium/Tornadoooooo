@@ -66,7 +66,7 @@ public class PullingMechanicOutside : MonoBehaviour
                 foreach (GameObject gameObject in _list)
                 {
 
-
+                    gameObject.GetComponent<ItemBlockBehaviour>()._cantBeThrown = false;
 
                     Vector3 connection = _target.transform.position - gameObject.transform.position;
                     gameObject.transform.right = connection;
@@ -115,28 +115,32 @@ public class PullingMechanicOutside : MonoBehaviour
                 Physics.IgnoreLayerCollision(suckableLayer, suckableLayer, false);
 
 
-                gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject);
+                //gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject);
 
 
                 Rigidbody rb = gameObject.GetComponent<Rigidbody>();
 
                 Vector3 direction = gameObject.transform.position - _target.transform.position;
 
-                if (direction.magnitude <= 1f)
-                {
-                    rb.linearVelocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
+                //if (direction.magnitude <= 1f)
+                //{
+                //    rb.linearVelocity = Vector3.zero;
+                //    rb.angularVelocity = Vector3.zero;
 
-                    rb.AddForce(new Vector3(0, 1 * _forceMultiplyer, 0), ForceMode.Impulse);
-                }
+                //    rb.AddForce(new Vector3(0, 1 * _forceMultiplyer, 0), ForceMode.Impulse);
+                //}
 
-                if (direction.magnitude >= 1f)
-                {
-                    //gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject); gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject);
-                    gameObject.GetComponent<ItemBlockBehaviour>().ThrowObject();
-                }
+                //if (direction.magnitude >= 1f)
+                //{
+                //gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject); gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject);
 
-                gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+               
+                gameObject.GetComponent<ItemBlockBehaviour>().ThrowObject();
+            
+                //}
+
+                //gameObject.GetComponent<MeshRenderer>().enabled = true;
 
 
             }

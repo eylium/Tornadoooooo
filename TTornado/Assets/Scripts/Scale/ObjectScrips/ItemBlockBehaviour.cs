@@ -15,6 +15,8 @@ public class ItemBlockBehaviour : MonoBehaviour
     private Vector3 originalScale;
 
 
+    public bool _cantBeThrown;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,36 +27,40 @@ public class ItemBlockBehaviour : MonoBehaviour
     void Update()
     {
 
-        if (!ValueManager.IsPullingStrongly)
-        {
-            transform.localScale = originalScale;
-        }
+        //if (!ValueManager.IsPullingStrongly)
+        //{
+        //    transform.localScale = originalScale;
+        //}
     }
-    public int AddCounter(int counter)
-    {
-        if (!_isCounted)
-        {
-            counter += 1;
-            _isCounted = true;
+    //public int AddCounter(int counter)
+    //{
+    //    if (!_isCounted)
+    //    {
+    //        counter += 1;
+    //        _isCounted = true;
 
-            return counter;
+    //        return counter;
 
-        }
-        return counter;
-    }
+    //    }
+    //    return counter;
+    //}
 
     public void ThrowObject()
     {
-        ValueManager.IsThrown = true;
-        transform.SetParent(null, true);
-        Vector3 difference = transform.forward;
+        if (_cantBeThrown == false)
+        {
+            transform.SetParent(null, true);
+            //Vector3 difference = transform.forward;
 
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward, ForceMode.Impulse);
-        ValueManager.IsThrown = false;
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 20, ForceMode.Impulse);
+            _cantBeThrown = true;
 
-        StopAllCoroutines();
-        rb.transform.localScale = originalScale;
+            Debug.Log(rb.ToString());
+        }
+
+        //StopAllCoroutines();
+        //rb.transform.localScale = originalScale;
     }
 
     public void Move(GameObject go, GameObject target, float maxSpeed, float vibrateTimer)
@@ -78,58 +84,62 @@ public class ItemBlockBehaviour : MonoBehaviour
         go.transform.SetParent(target.transform, true);
     }
 
-    public void StartScale(GameObject go)
-    {
-        // Only start the coroutine if we haven’t scaled yet
-        if (!hasScaled && !isScaling)
-        {
-            StartCoroutine(ScaleOnce(go));
-        }
-    }
 
-    public void ReverseScale(GameObject go)
-    {
-
-        transform.localScale = originalScale;
+  
 
 
-    }
-    private IEnumerator ScaleOnce(GameObject go)
-    {
+    //public void StartScale(GameObject go)
+    //{
+    //    // Only start the coroutine if we haven’t scaled yet
+    //    if (!hasScaled && !isScaling)
+    //    {
+    //        StartCoroutine(ScaleOnce(go));
+    //    }
+    //}
 
-        isScaling = true;
-        hasScaled = true;
+    //public void ReverseScale(GameObject go)
+    //{
+
+    //    transform.localScale = originalScale;
 
 
+    //}
+    //private IEnumerator ScaleOnce(GameObject go)
+    //{
 
-        Vector3 startScale = go.transform.localScale;
-        Vector3 newScale = new Vector3(0.1f, 0.1f, 0.1f);
-
-        float duration = 1.5f; // how long the scaling should take
-        float elapsed = 0f;
+    //    isScaling = true;
+    //    hasScaled = true;
 
 
 
-        while (elapsed < duration)
-        {
-            //float t = elapsed / duration; // normalized time [0, 1]
+    //    Vector3 startScale = go.transform.localScale;
+    //    Vector3 newScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-            float t = elapsed / duration;
-            t = Mathf.Pow(t, 4f); // exponential ease-in
-            go.transform.localScale = Vector3.Lerp(startScale, newScale, t);
+    //    float duration = 1.5f; // how long the scaling should take
+    //    float elapsed = 0f;
 
 
-            //go.transform.localScale = Vector3.Lerp(startScale, newScale, t);
-            elapsed += Time.deltaTime;
-            yield return null; // wait for next frame
-        }
 
-        // Ensure it ends exactly on the target scale
-        go.transform.localScale = newScale;
+    //    while (elapsed < duration)
+    //    {
+    //        //float t = elapsed / duration; // normalized time [0, 1]
 
-        isScaling = false;
+    //        float t = elapsed / duration;
+    //        t = Mathf.Pow(t, 4f); // exponential ease-in
+    //        go.transform.localScale = Vector3.Lerp(startScale, newScale, t);
 
-    }
+
+    //        //go.transform.localScale = Vector3.Lerp(startScale, newScale, t);
+    //        elapsed += Time.deltaTime;
+    //        yield return null; // wait for next frame
+    //    }
+
+    //    // Ensure it ends exactly on the target scale
+    //    go.transform.localScale = newScale;
+
+    //    isScaling = false;
+
+    //}
 
     //private IEnumerator ScaleOnceBack(GameObject go)
     //{

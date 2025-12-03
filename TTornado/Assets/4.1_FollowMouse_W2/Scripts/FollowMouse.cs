@@ -21,12 +21,9 @@ public class FollowMouse : MonoBehaviour
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 100000, 1 << 8))
         {
             ValueManager.WorldMousePosition = hit.point;
-           
-        }
-        //transform.position = Vector3.Lerp(transform.position, worldPosition, Speed * Time.deltaTime);
 
-        //ValueManager.WorldMousePosition = worldPosition;
+        }
 
     }
-   
+
 }
