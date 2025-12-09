@@ -21,6 +21,7 @@ public class ItemBlockBehaviour : MonoBehaviour
     void Start()
     {
         originalScale = transform.localScale;
+        ValueManager.GameObjectCounter += 1;
     }
 
     // Update is called once per frame
@@ -53,10 +54,9 @@ public class ItemBlockBehaviour : MonoBehaviour
             //Vector3 difference = transform.forward;
 
             Rigidbody rb = GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 20, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 40, ForceMode.Impulse);
             _cantBeThrown = true;
 
-            Debug.Log(rb.ToString());
         }
 
         //StopAllCoroutines();
@@ -85,7 +85,7 @@ public class ItemBlockBehaviour : MonoBehaviour
     }
 
 
-  
+
 
 
     //public void StartScale(GameObject go)

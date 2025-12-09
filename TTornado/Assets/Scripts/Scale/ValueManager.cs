@@ -13,6 +13,8 @@ public static class ValueManager
 
     public static bool IsCounted;
 
+    public static bool HasExploded;
     public static Vector3 WorldMousePosition { get; set; }
+    public static int GameObjectCounter { get; set; }
 
 }
