@@ -15,6 +15,9 @@ public static class ValueManager
 
     public static bool HasExploded;
     public static Vector3 WorldMousePosition { get; set; }
-    public static int GameObjectCounter { get; set; }
+    public static int DestructionCounter { get; set; }
 
+    public static bool GameHasEnded {  get; set; }
+
+    public static float Timer { get; set; }
 }

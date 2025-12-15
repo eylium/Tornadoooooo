@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
-  
+
 
     //public Variable
     [SerializeField]
@@ -35,7 +35,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-          
+
 
         //Gameobjects
         controller = GetComponent<CharacterController>();
@@ -99,7 +99,7 @@ public class PlayerScript : MonoBehaviour
         }
         controller.Move(velocity * Time.deltaTime);
 
-     
+
     }
 
 
@@ -114,8 +114,27 @@ public class PlayerScript : MonoBehaviour
         //Vector3 moveVetor = ValueManager.WorldMousePosition;
         //Vector3 pos = Vector3.Lerp(transform.position, moveVetor, Time.deltaTime);
 
+
+
         Vector3 pos = (ValueManager.WorldMousePosition - transform.position).normalized;
-        controller.Move((new Vector3(pos.x, 0, pos.z) * moveSpeed * Time.deltaTime));
+       
+
+
+        float bep = (transform.position - ValueManager.WorldMousePosition).magnitude;
+
+        bep = bep / 15f;
+
+
+        bep = Mathf.Clamp(bep, 0f, 2f);
+        
+        controller.Move((new Vector3(pos.x, 0, pos.z) * moveSpeed * bep * Time.deltaTime));
+
+
+
+
+
+
+
 
 
 

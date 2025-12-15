@@ -55,7 +55,6 @@ public class PullingMechanicOutside : MonoBehaviour
     {
 
 
-
         if (ValueManager.HasExploded)
         {
             _explosionTimer += Time.deltaTime;
@@ -101,27 +100,11 @@ public class PullingMechanicOutside : MonoBehaviour
                     if (_vibrateTimer > 0.4f)
                     {
 
-                        //gameObject.GetComponent<ItemBlockBehaviour>().Move(gameObject, _target, _maxSpeed, _vibrateTimer);                        
                         gameObject.GetComponent<ItemBlockBehaviour>().SetParent(gameObject, _target);
                     }
 
                     Vector3 direction = gameObject.transform.position - _target.transform.position;
 
-                    //if (direction.magnitude <= 3)
-                    //{
-
-                    //    gameObject.GetComponent<ItemBlockBehaviour>().StartScale(gameObject);
-
-                    //    //gameObject.transform.localScale *= 0.9f;
-                    //}
-                    //if (direction.magnitude <= 1)
-                    //{
-
-                    //    int suckableLayer = LayerMask.NameToLayer("Suckable");
-
-                    //    Physics.IgnoreLayerCollision(suckableLayer, suckableLayer, true);
-                    //    gameObject.GetComponent<MeshRenderer>().enabled = false;
-                    //}
                 }
             }
 
@@ -138,33 +121,15 @@ public class PullingMechanicOutside : MonoBehaviour
                     Physics.IgnoreLayerCollision(suckableLayer, suckableLayer, false);
 
 
-                    //gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject);
 
 
                     Rigidbody rb = gameObject.GetComponent<Rigidbody>();
 
                     Vector3 direction = gameObject.transform.position - _target.transform.position;
 
-                    //if (direction.magnitude <= 1f)
-                    //{
-                    //    rb.linearVelocity = Vector3.zero;
-                    //    rb.angularVelocity = Vector3.zero;
-
-                    //    rb.AddForce(new Vector3(0, 1 * _forceMultiplyer, 0), ForceMode.Impulse);
-                    //}
-
-                    //if (direction.magnitude >= 1f)
-                    //{
-                    //gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject); gameObject.GetComponent<ItemBlockBehaviour>().ReverseScale(gameObject);
-
 
 
                     gameObject.GetComponent<ItemBlockBehaviour>().ThrowObject();
-
-                    //}
-
-                    //gameObject.GetComponent<MeshRenderer>().enabled = true;
-
 
                 }
                 _list.Clear();
@@ -174,16 +139,20 @@ public class PullingMechanicOutside : MonoBehaviour
             {
                 _vibrateTimer = 0;
             }
-
-
-            //transform.position = Vector3.Lerp(transform.position, new Vector3(0, 0, 0), Time.deltaTime * _rotationSpeed);
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (other != null && other.gameObject.layer == 3 && ValueManager.IsPullingStrongly)
         {
-            _list.Add(other.gameObject);
+            
+            if (other != null &&
+      other.gameObject.layer == 3 &&
+      ValueManager.IsPullingStrongly &&
+      !_list.Contains(other.gameObject))
+            {
+                _list.Add(other.gameObject);
+            }
         }
 
 

@@ -5,6 +5,10 @@ using static UnityEngine.GraphicsBuffer;
 
 public class ItemBlockBehaviour : MonoBehaviour
 {
+    private Vector3 originalPosition;
+    public float destructionThreshold = 10f;
+    private bool hasScored = false;
+
 
     public bool IsThrown;
 
@@ -21,31 +25,34 @@ public class ItemBlockBehaviour : MonoBehaviour
     void Start()
     {
         originalScale = transform.localScale;
-        ValueManager.GameObjectCounter += 1;
+
+
+        originalPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //if (!ValueManager.IsPullingStrongly)
-        //{
-        //    transform.localScale = originalScale;
-        //}
+
     }
-    //public int AddCounter(int counter)
-    //{
-    //    if (!_isCounted)
-    //    {
-    //        counter += 1;
-    //        _isCounted = true;
+    private void FixedUpdate()
+    {
 
-    //        return counter;
+        AddDestructionValue();
+    }
+    private void AddDestructionValue()
+    {
+        // Distance from original spot
+        float distance = Vector3.Distance(transform.position, originalPosition);
 
-    //    }
-    //    return counter;
-    //}
-
+        if (!hasScored && distance >= destructionThreshold)
+        {
+            // Add to the destruction meter once
+            ValueManager.DestructionCounter += 1;
+            hasScored = true;
+        }
+    }
     public void ThrowObject()
     {
         if (_cantBeThrown == false)
@@ -54,7 +61,7 @@ public class ItemBlockBehaviour : MonoBehaviour
             //Vector3 difference = transform.forward;
 
             Rigidbody rb = GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 40, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 100, ForceMode.Impulse);
             _cantBeThrown = true;
 
         }

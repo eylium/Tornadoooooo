@@ -2,39 +2,37 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class DestructionCounter : MonoBehaviour
 {
-    private List<Object> _allDestructible;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public int maxDestruction = 50; // set in inspector
+
+    private Slider slider;
+
+    [SerializeField]
+    private Image Image;
+
     void Start()
     {
-        //_allDestructible = new List<Object>();
-        //Breakable[] allObjects = FindObjectsOfType<Breakable>();
 
-        //foreach (Breakable go in allObjects)
-        //    if (go.isActiveAndEnabled)
-        //        print(go + " is an active object");
+        slider = GetComponent<Slider>();
 
-        //GameObject[] activeObjects = FindObjectsOfType<GameObject>();
-
-        //Debug.Log(activeObjects.Length);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //float objectCount = UnityStats.vboTotal;
-
-        //Debug.Log(objectCount);
-
-
-        //int numberOfTaggedObjects = GameObject.FindGameObjectsWithTag("Destructible").Length;
-
-        //Debug.Log(numberOfTaggedObjects);
-
-
-        //Debug.Log(ValueManager.GameObjectCounter);
+        slider.value = Mathf.Clamp01((float)ValueManager.DestructionCounter / maxDestruction);
+        if (slider.value == 1)
+        {
+            ValueManager.GameHasEnded = true;
+        }
+        //Image.color = Color.Lerp(Color.green, Color.red, slider.value / maxDestruction);
+        //if (ValueManager.DestructionCounter > maxDestruction)
+        //{
+        //}
     }
 }
