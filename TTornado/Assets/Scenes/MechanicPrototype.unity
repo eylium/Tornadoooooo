@@ -1475,7 +1475,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _endCanvas: {fileID: 443673167}
-  _endImage: {fileID: 647453847}
   _timerText: {fileID: 289425250}
 --- !u!4 &425394599
 Transform:
@@ -4189,6 +4188,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5311576659006662659, guid: 163eff7accedf5f4e9e8be8057755998, type: 3}
+      propertyPath: m_Name
+      value: BuildingSmallTrigger
+      objectReference: {fileID: 0}
     - target: {fileID: 6239050248039352353, guid: 163eff7accedf5f4e9e8be8057755998, type: 3}
       propertyPath: m_Name
       value: breakable (1)
@@ -5131,6 +5134,10 @@ PrefabInstance:
     - target: {fileID: 4095481737229414915, guid: 163eff7accedf5f4e9e8be8057755998, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311576659006662659, guid: 163eff7accedf5f4e9e8be8057755998, type: 3}
+      propertyPath: m_Name
+      value: BuildingSmallTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 6239050248039352353, guid: 163eff7accedf5f4e9e8be8057755998, type: 3}
       propertyPath: m_Name
@@ -7315,6 +7322,10 @@ PrefabInstance:
     - target: {fileID: 3488357590495463304, guid: 45c0fd4104c2c974996e6925da0a6bd7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073453131060604684, guid: 45c0fd4104c2c974996e6925da0a6bd7, type: 3}
+      propertyPath: m_Name
+      value: nuclearTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 5307802362369704342, guid: 45c0fd4104c2c974996e6925da0a6bd7, type: 3}
       propertyPath: ExplosionCenter

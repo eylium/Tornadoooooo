@@ -7,7 +7,7 @@ public class GameEnderScript : MonoBehaviour
     [SerializeField]
     private Canvas _endCanvas;
 
-    [SerializeField] private Image _endImage;
+    //[SerializeField] private Image _endImage;
     [SerializeField] private TMP_Text _timerText;
 
     private float _waitTime;
@@ -15,8 +15,8 @@ public class GameEnderScript : MonoBehaviour
     void Start()
     {
         _endCanvas.gameObject.SetActive(false);
-        _endImage.transform.position = new Vector3(-617f, 466f, 0);
-        _endImage.transform.localScale = new Vector3(0.34f, 0.08f, 0);
+        //_endImage.transform.position = new Vector3(-617f, 466f, 0);
+        //_endImage.transform.localScale = new Vector3(0.34f, 0.08f, 0);
         //_endImage.color = new Color(1,1,1,0);
     }
 

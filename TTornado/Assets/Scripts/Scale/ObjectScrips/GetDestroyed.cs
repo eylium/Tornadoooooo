@@ -10,6 +10,8 @@ public class GetDestroyed : MonoBehaviour
     public bool _hasExploded = false;
     [SerializeField]
     private GameObject ExplosionCenter;
+
+    private int _objectCounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +34,74 @@ public class GetDestroyed : MonoBehaviour
 
 
 
+        //GetJudegedBySize(other);
+
+        GetJudgedByAmount(other);
+    }
+    private void GetJudgedByAmount(Collider other)
+    {
+
+        //Debug.Log(this.name + " " + this.gameObject.GetComponent<Collider>().bounds.size.magnitude);
+        //SetOffDestructionBySize(other, 40, 15);
+       
+        if (this.gameObject.GetComponent<Collider>().bounds.size.magnitude >= 40)
+        {
+            Debug.Log("beep");
+            SetOffDestructionBySize(other, 40, 100);
+
+        } 
+        else if (gameObject.GetComponent<Collider>().bounds.size.magnitude >= 20)
+        {
+            Debug.Log("eeep");
+            SetOffDestructionBySize(other, 20, 1);
+
+        }
+       
+
+        if (other.gameObject.layer != 8)
+        {
+            _objectCounter++;
+            //Debug.Log(this + " " + _objectCounter);
+        }
+    }
+    private void SetOffDestructionBySize(Collider other, int boundSize, int objectCounter)
+    {
+        //int bigBoundSize = boundSize+=20;
+
+        //Debug.Log(bigBoundSize);
+
+        //Debug.Log(gameObject.GetComponent<Collider>().bounds.size.magnitude);
+        if (this.gameObject.GetComponent<Collider>().bounds.size.magnitude >= boundSize /*&& (gameObject.GetComponent<Collider>().bounds.size.magnitude <= bigBoundSize*//*)*/)
+        {
+            
+            if (other.gameObject != IgnoreCollision)
+            {
+               
+                if (_objectCounter >= objectCounter)
+                {
+                    SetOffExplosionAndDestruction();
+
+                }
+            }
+        }
+    }
+    private void SetOffExplosionAndDestruction()
+    {
+        //Debug.Log("break");
+        GetComponent<Breakable>().Break();
+        if (ExplosionCenter != null)
+        {
+            //Debug.Log(gameObject.name);
+            Explosion(ExplosionCenter.transform.position, 100, 20);
+
+            _objectCounter = 0;
+
+        }
+
+        gameObject.SetActive(false);
+    }
+    private void GetJudegedBySize(Collider other)
+    {
         if (other.bounds.size.magnitude > gameObject.GetComponent<Collider>().bounds.size.magnitude * 0.4f && other.gameObject.layer != 8)
         {
             if (other.gameObject != IgnoreCollision)
@@ -39,16 +109,18 @@ public class GetDestroyed : MonoBehaviour
 
 
 
-                GetComponent<Breakable>().Break();
+                //GetComponent<Breakable>().Break();
 
-                if (ExplosionCenter != null)
-                {
-                    Explosion(ExplosionCenter.transform.position, 100, 20);
+                //if (ExplosionCenter != null)
+                //{
+                //    Explosion(ExplosionCenter.transform.position, 100, 20);
 
-                }
+                //}
 
 
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
+
+                SetOffExplosionAndDestruction();
             }
         }
     }
@@ -56,7 +128,7 @@ public class GetDestroyed : MonoBehaviour
     {
         ValueManager.HasExploded = true;
 
-       
+
         AudioManager.Instance.PlaySFX("Explosion");
         ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
 
@@ -86,10 +158,10 @@ public class GetDestroyed : MonoBehaviour
 
 
             }
-            
+
         }
         //ParticleManager.Instance.StopParticles("Explosion");
-      
+
     }
 
 
