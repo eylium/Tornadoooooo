@@ -7,6 +7,8 @@ public class GetDestroyed : MonoBehaviour
     [SerializeField]
     private GameObject IgnoreCollision;
 
+
+
     public bool _hasExploded = false;
     [SerializeField]
     private GameObject ExplosionCenter;
@@ -26,103 +28,76 @@ public class GetDestroyed : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.bounds.size.magnitude + " " + other.gameObject.name);
-        //Debug.Log(gameObject.GetComponent<Collider>().bounds.size.magnitude*0.8f + " " + gameObject.name);
-
-        //Debug.Log(other.bounds.size.magnitude + other.name);
-        //Debug.Log(gameObject.GetComponent<Collider>().bounds.size.magnitude * 0.4f + this.name);
+        //GameObject pullObject = GameObject.Find("PullHit");
+        //int p = pullObject.GetComponent<PullingMechanicOutside>().CheckIfStrongEnough(gameObject.GetComponent<Collider>(), false);
 
 
+        //if ((ValueManager.SizeCounter >= 3)&& (this.gameObject.GetComponent<Collider>().bounds.size.magnitude>= 60)){
+        //    Debug.Log("beep");
+        //}
 
-        //GetJudegedBySize(other);
 
-        GetJudgedByAmount(other);
+        CheckIfSized(ValueManager.SizeCounter, IgnoreCollision.GetComponent<Collider>().bounds.size.magnitude);
     }
-    private void GetJudgedByAmount(Collider other)
+
+    private void CheckIfSized(float size, float colliderSize)
     {
-
-        //Debug.Log(this.name + " " + this.gameObject.GetComponent<Collider>().bounds.size.magnitude);
-        //SetOffDestructionBySize(other, 40, 15);
+        if (size>= 3 && colliderSize<= 60)
+        {
+            SetOffExplosionAndDestruction();
+        }
+        else if (size >= 2 &&  colliderSize<= 40)
+        {
        
-        if (this.gameObject.GetComponent<Collider>().bounds.size.magnitude >= 40)
-        {
-            Debug.Log("beep");
-            SetOffDestructionBySize(other, 40, 100);
-
-        } 
-        else if (gameObject.GetComponent<Collider>().bounds.size.magnitude >= 20)
-        {
-            Debug.Log("eeep");
-            SetOffDestructionBySize(other, 20, 1);
-
+            SetOffExplosionAndDestruction();
         }
-       
-
-        if (other.gameObject.layer != 8)
+        else if (size >= 1 && colliderSize<= 20)
         {
-            _objectCounter++;
-            //Debug.Log(this + " " + _objectCounter);
+
+            SetOffExplosionAndDestruction();
         }
+        else if (size >= 0&& colliderSize <= 10){
+    
+            SetOffExplosionAndDestruction();
+        }
+      
     }
-    private void SetOffDestructionBySize(Collider other, int boundSize, int objectCounter)
-    {
-        //int bigBoundSize = boundSize+=20;
 
-        //Debug.Log(bigBoundSize);
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //Debug.Log(other.bounds.size.magnitude + " " + other.gameObject.name);
+    //Debug.Log(gameObject.GetComponent<Collider>().bounds.size.magnitude*0.8f + " " + gameObject.name);
 
-        //Debug.Log(gameObject.GetComponent<Collider>().bounds.size.magnitude);
-        if (this.gameObject.GetComponent<Collider>().bounds.size.magnitude >= boundSize /*&& (gameObject.GetComponent<Collider>().bounds.size.magnitude <= bigBoundSize*//*)*/)
-        {
-            
-            if (other.gameObject != IgnoreCollision)
-            {
-               
-                if (_objectCounter >= objectCounter)
-                {
-                    SetOffExplosionAndDestruction();
+    //Debug.Log(other.bounds.size.magnitude + other.name);
+    //Debug.Log(gameObject.GetComponent<Collider>().bounds.size.magnitude * 0.4f + this.name);
 
-                }
-            }
-        }
-    }
-    private void SetOffExplosionAndDestruction()
+
+
+    //GetJudegedBySize(other);
+
+    //GetJudgedByAmount(other);
+
+    //    Debug.LogWarning("entered");
+
+
+    //}
+
+  
+    public void SetOffExplosionAndDestruction()
     {
         //Debug.Log("break");
+        Debug.Log("get broken");
         GetComponent<Breakable>().Break();
         if (ExplosionCenter != null)
         {
             //Debug.Log(gameObject.name);
             Explosion(ExplosionCenter.transform.position, 100, 20);
-
+            Debug.Log("explode");
             _objectCounter = 0;
 
         }
 
         gameObject.SetActive(false);
-    }
-    private void GetJudegedBySize(Collider other)
-    {
-        if (other.bounds.size.magnitude > gameObject.GetComponent<Collider>().bounds.size.magnitude * 0.4f && other.gameObject.layer != 8)
-        {
-            if (other.gameObject != IgnoreCollision)
-            {
-
-
-
-                //GetComponent<Breakable>().Break();
-
-                //if (ExplosionCenter != null)
-                //{
-                //    Explosion(ExplosionCenter.transform.position, 100, 20);
-
-                //}
-
-
-                //gameObject.SetActive(false);
-
-                SetOffExplosionAndDestruction();
-            }
-        }
     }
     private void Explosion(Vector3 center, float radius, float maxforce)
     {
@@ -163,6 +138,91 @@ public class GetDestroyed : MonoBehaviour
         //ParticleManager.Instance.StopParticles("Explosion");
 
     }
+    //private void GetJudgedByAmount(Collider other)
+    //{
+
+    //    //Debug.Log(this.name + " " + this.gameObject.GetComponent<Collider>().bounds.size.magnitude);
+    //    //SetOffDestructionBySize(other, 40, 15);
+
+
+    //    if (this.gameObject.GetComponent<Collider>().bounds.size.magnitude >= 40)
+    //    {
+
+    //        SetOffDestructionBySize(other, 40, 50);
+
+    //    }
+    //    else if (gameObject.GetComponent<Collider>().bounds.size.magnitude >= 30)
+    //    {
+
+    //        SetOffDestructionBySize(other, 30, 10);
+
+    //    }
+    //    else if (gameObject.GetComponent<Collider>().bounds.size.magnitude >= 20)
+    //    {
+
+    //        SetOffDestructionBySize(other, 20, 3);
+
+    //    }
+
+
+
+
+
+
+
+    //    if (other.gameObject.layer != 8)
+    //    {
+    //        _objectCounter++;
+    //        //Debug.Log(this + " " + _objectCounter);
+    //    }
+    //}
+    //private void SetOffDestructionBySize(Collider other, int boundSize, int objectCounter)
+    //{
+    //    //int bigBoundSize = boundSize+=20;
+
+    //    //Debug.Log(bigBoundSize);
+
+    //    //Debug.Log(gameObject.GetComponent<Collider>().bounds.size.magnitude);
+    //    if (this.gameObject.GetComponent<Collider>().bounds.size.magnitude >= boundSize /*&& (gameObject.GetComponent<Collider>().bounds.size.magnitude <= bigBoundSize*//*)*/)
+    //    {
+
+    //        if (other.gameObject != IgnoreCollision)
+    //        {
+
+    //            if (_objectCounter >= objectCounter)
+    //            {
+    //                SetOffExplosionAndDestruction();
+
+    //            }
+    //        }
+    //    }
+    //}
+
+    //private void GetJudegedBySize(Collider other)
+    //{
+    //    if (other.bounds.size.magnitude > gameObject.GetComponent<Collider>().bounds.size.magnitude * 0.4f && other.gameObject.layer != 8)
+    //    {
+    //        if (other.gameObject != IgnoreCollision)
+    //        {
+
+
+
+    //            //GetComponent<Breakable>().Break();
+
+    //            //if (ExplosionCenter != null)
+    //            //{
+    //            //    Explosion(ExplosionCenter.transform.position, 100, 20);
+
+    //            //}
+
+
+    //            //gameObject.SetActive(false);
+
+    //            SetOffExplosionAndDestruction();
+    //        }
+    //    }
+    //}
+
 
 
 }

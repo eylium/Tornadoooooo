@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class DestructionCounter : MonoBehaviour
 {
 
-    public int maxDestruction = 50; // set in inspector
+    /*public int maxDestruction = 50;*/ // set in inspector
 
     private Slider slider;
 
@@ -25,7 +25,7 @@ public class DestructionCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.value = Mathf.Clamp01((float)ValueManager.DestructionCounter / maxDestruction);
+        slider.value = Mathf.Clamp01((float)ValueManager.DestructionCounter / ValueManager.MaxDestruction);
         if (slider.value == 1)
         {
             ValueManager.GameHasEnded = true;

@@ -1,9 +1,7 @@
 
-using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+
 
 
 public class PullingMechanicOutside : MonoBehaviour
@@ -26,7 +24,7 @@ public class PullingMechanicOutside : MonoBehaviour
 
     private GameObject _player;
 
-    [SerializeField]
+
     private float _rotationSpeed;
 
 
@@ -53,7 +51,7 @@ public class PullingMechanicOutside : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
+        SizeUpPlayer();
 
         if (ValueManager.HasExploded)
         {
@@ -121,15 +119,12 @@ public class PullingMechanicOutside : MonoBehaviour
                     Physics.IgnoreLayerCollision(suckableLayer, suckableLayer, false);
 
 
-
-
                     Rigidbody rb = gameObject.GetComponent<Rigidbody>();
 
                     Vector3 direction = gameObject.transform.position - _target.transform.position;
 
 
-
-                    gameObject.GetComponent<ItemBlockBehaviour>().ThrowObject();
+                    if (gameObject.GetComponent<ItemBlockBehaviour>() != null) gameObject.GetComponent<ItemBlockBehaviour>().ThrowObject();
 
                 }
                 _list.Clear();
@@ -141,23 +136,113 @@ public class PullingMechanicOutside : MonoBehaviour
             }
         }
     }
+
+    private void SizeUpPlayer()
+    {
+        //Debug.Log(((float)ValueManager.DestructionCounter/ValueManager.MaxDestruction)*5);
+        //ValueManager.SizeCounter += ((float)ValueManager.DestructionCounter/ValueManager.MaxDestruction)*5;
+
+        //Debug.Log(((float)ValueManager.DestructionCounter / ValueManager.MaxDestruction)*10);
+        ValueManager.SizeCounter = ((float)ValueManager.DestructionCounter / ValueManager.MaxDestruction * 10);
+    }
+
     private void OnTriggerStay(Collider other)
     {
-        if (other != null && other.gameObject.layer == 3 && ValueManager.IsPullingStrongly)
+        //if (ValueManager.IsPullingStrongly)
+        //{
+        //    if (other.GetComponent<GetDestroyed>() != null)
+        //    {
+        //        other.GetComponent<GetDestroyed>().SetOffExplosionAndDestruction();
+        //        Debug.Log("set off breakage");
+        //    }
+        //}
+        
+
+        if (other != null && ValueManager.IsPullingStrongly)
         {
-            
-            if (other != null &&
-      other.gameObject.layer == 3 &&
+
+            if (other != null  &&
       ValueManager.IsPullingStrongly &&
       !_list.Contains(other.gameObject))
             {
-                _list.Add(other.gameObject);
+                CheckIfStrongEnough(other);
+
+
+
             }
+
         }
 
 
     }
 
+    public void CheckIfStrongEnough(Collider other)
+    {
+        if (ValueManager.SizeCounter >= 3)
+        {
+            AddObjectUnderSize(60, other);
+            _rotationSpeed = 6;
+            
+
+
+        }
+        else if (ValueManager.SizeCounter >= 2)
+        {
+            AddObjectUnderSize(40, other);
+            _rotationSpeed = 5;
+
+        }
+        else if (ValueManager.SizeCounter >= 1)
+        {
+            AddObjectUnderSize(20, other);
+            _rotationSpeed = 4;
+
+        }
+        else if (ValueManager.SizeCounter >= 0)
+        {
+            AddObjectUnderSize(10, other);
+            _rotationSpeed = 2;
+
+        }
+    }
+
+    public void CheckColliderToDestroy(Collider other)
+    {
+
+    }
+
+    private void AddObjectUnderSize(float size, Collider other)
+    {
+
+        if (other.bounds.size.magnitude <= size)
+        {
+            if (other.GetComponent<GetDestroyed>() != null)
+            {
+                other.GetComponent<GetDestroyed>().SetOffExplosionAndDestruction();
+                Debug.Log("set off");
+            }
+
+
+
+            if (other.gameObject.layer == 3)
+            {
+                _list.Add(other.gameObject);
+            }
+
+
+
+
+
+
+            //if (other.GetComponent<ItemBlockBehaviour>()._hasBeenPickedUp == false)
+            //{
+            //    float addition = other.bounds.size.magnitude;
+            //    ValueManager.SizeCounter += addition;
+
+
+            //}
+        }
+    }
 
     private void EnableParticles()
     {

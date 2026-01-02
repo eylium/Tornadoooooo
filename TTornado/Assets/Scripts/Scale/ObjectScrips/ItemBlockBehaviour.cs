@@ -21,6 +21,8 @@ public class ItemBlockBehaviour : MonoBehaviour
 
     public bool _cantBeThrown;
 
+    public bool _hasBeenPickedUp;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,6 +52,7 @@ public class ItemBlockBehaviour : MonoBehaviour
         {
             // Add to the destruction meter once
             ValueManager.DestructionCounter += 1;
+
             hasScored = true;
         }
     }
@@ -61,7 +64,7 @@ public class ItemBlockBehaviour : MonoBehaviour
             //Vector3 difference = transform.forward;
 
             Rigidbody rb = GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 100, ForceMode.Impulse);
+            rb.AddForce(transform.forward * GetForce(), ForceMode.Impulse);
             _cantBeThrown = true;
 
         }
@@ -69,29 +72,66 @@ public class ItemBlockBehaviour : MonoBehaviour
         //StopAllCoroutines();
         //rb.transform.localScale = originalScale;
     }
-
-    public void Move(GameObject go, GameObject target, float maxSpeed, float vibrateTimer)
+        
+    private int GetForce()
     {
-
-        //_elapsed += Time.fixedDeltaTime;
-        //float duration = 10f;
-        //float t = _elapsed / duration;
-        SetParent(go, target);
-        float range = 1.87f;
-        range = Random.Range(0, range);
-        Vector3 targetPosition = new Vector3(target.transform.position.x, range, target.transform.position.z);
-
-        go.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPosition, maxSpeed * Time.fixedDeltaTime);
+        if (ValueManager.SizeCounter >= 3)
+        {
+            return 60;
 
 
+        }
+        else if (ValueManager.SizeCounter >= 2)
+        {
+            return 40;
+
+        }
+        else if (ValueManager.SizeCounter >= 1)
+        {
+            return 20;
+
+        }
+        else if (ValueManager.SizeCounter >= 0)
+        {
+            return 5;
+
+        }
+        return 0;
+
+    
     }
+
+    //public void Move(GameObject go, GameObject target, float maxSpeed, float vibrateTimer)
+    //{
+
+    //    //_elapsed += Time.fixedDeltaTime;
+    //    //float duration = 10f;
+    //    //float t = _elapsed / duration;
+    //    SetParent(go, target);
+    //    float range = 1.87f;
+    //    range = Random.Range(0, range);
+    //    Vector3 targetPosition = new Vector3(target.transform.position.x, range, target.transform.position.z);
+
+    //    go.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPosition, maxSpeed * Time.fixedDeltaTime);
+
+
+    //}
 
     public void SetParent(GameObject go, GameObject target)
     {
+        _hasBeenPickedUp = true;
         go.transform.SetParent(target.transform, true);
     }
 
+    public void Jitter(GameObject go, GameObject target, float maxSpeed, float vibrateTimer)
+    {
 
+        float vibrateRange = Random.Range(-5 * Time.fixedDeltaTime, 5 * Time.fixedDeltaTime);
+        Vector3 vibratePosition = gameObject.transform.position;
+        go.transform.position = new Vector3(vibratePosition.x += vibrateRange, vibratePosition.y, vibratePosition.z += vibrateRange);
+
+
+    }
 
 
 
@@ -182,15 +222,7 @@ public class ItemBlockBehaviour : MonoBehaviour
     //    isScaling = false;
 
     //}
-    public void Jitter(GameObject go, GameObject target, float maxSpeed, float vibrateTimer)
-    {
 
-        float vibrateRange = Random.Range(-5 * Time.fixedDeltaTime, 5 * Time.fixedDeltaTime);
-        Vector3 vibratePosition = gameObject.transform.position;
-        go.transform.position = new Vector3(vibratePosition.x += vibrateRange, vibratePosition.y, vibratePosition.z += vibrateRange);
-
-
-    }
     //    public bool IsThrown;
 
     //    private bool isScaling;

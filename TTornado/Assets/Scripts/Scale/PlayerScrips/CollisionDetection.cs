@@ -50,7 +50,7 @@ public class CollisionDetection : MonoBehaviour
                 if (other.gameObject.layer == 10)
                 {
                     Destroy(other.gameObject);
-                    ValueManager.GainedEnergy = true;
+                    //ValueManager.GainedEnergy = true;
                 }
             }
             else if (other.gameObject != null)
