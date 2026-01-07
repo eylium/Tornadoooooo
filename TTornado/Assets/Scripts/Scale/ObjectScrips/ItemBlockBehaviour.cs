@@ -9,6 +9,7 @@ public class ItemBlockBehaviour : MonoBehaviour
     public float destructionThreshold = 10f;
     private bool hasScored = false;
 
+    public bool isPickedUp;
 
     public bool IsThrown;
 
@@ -67,6 +68,8 @@ public class ItemBlockBehaviour : MonoBehaviour
             rb.AddForce(transform.forward * GetForce(), ForceMode.Impulse);
             _cantBeThrown = true;
 
+            isPickedUp = false;
+
         }
 
         //StopAllCoroutines();
@@ -77,23 +80,23 @@ public class ItemBlockBehaviour : MonoBehaviour
     {
         if (ValueManager.SizeCounter >= 3)
         {
-            return 60;
+            return 80;
 
 
         }
         else if (ValueManager.SizeCounter >= 2)
         {
-            return 40;
+            return 70;
 
         }
         else if (ValueManager.SizeCounter >= 1)
         {
-            return 20;
+            return 60;
 
         }
         else if (ValueManager.SizeCounter >= 0)
         {
-            return 5;
+            return 30;
 
         }
         return 0;
@@ -120,6 +123,7 @@ public class ItemBlockBehaviour : MonoBehaviour
     public void SetParent(GameObject go, GameObject target)
     {
         _hasBeenPickedUp = true;
+        isPickedUp = true;
         go.transform.SetParent(target.transform, true);
     }
 

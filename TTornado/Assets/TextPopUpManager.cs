@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TextPopUpManager : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class TextPopUpManager : MonoBehaviour
     private float _pitchUpper = 1;
     [SerializeField] float plopCooldown = 0.1f;
     private float _lastPlopTime;
+
+
+    private int _lastPopupThreshold = -1;
+    [SerializeField] private Image _smallBuilding;
+    [SerializeField] private Image _bigBuilding;
+    [SerializeField] private Image _biggestBuilding;
 
 
     //model
@@ -47,20 +54,67 @@ public class TextPopUpManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _modelTargetScale = 1 + ValueManager.SizeCounter/5;
+        _modelTargetScale = 1 + ValueManager.SizeCounter / 5;
         _targetScale = 1 + ValueManager.SizeCounter * 2f;
 
 
         if (ValueManager.DestructionCounter != _previousDestruction)
         {
 
-            ShowPopUpText();
+            //ShowPopUpText();
             SizeUpPlayer();
             PlayPlop();
             _previousDestruction = ValueManager.DestructionCounter;
         }
+
+        CheckSize();
+
     }
 
+    void CheckSize()
+    {
+        if (ValueManager.SizeCounter >= 8 && _lastPopupThreshold < 8)
+        {
+            ShowPopUpText();
+            Animator biggestAnim = _biggestBuilding.GetComponent<Animator>();
+            ScaleUpImage(biggestAnim);
+
+          
+            _lastPopupThreshold = 8;
+        }
+        else if (ValueManager.SizeCounter >= 6 && _lastPopupThreshold < 6)
+        {
+            ShowPopUpText();
+            _lastPopupThreshold = 6;
+
+            Animator bigAnim = _bigBuilding.GetComponent<Animator>();
+            ScaleUpImage(bigAnim);
+        }
+        else if (ValueManager.SizeCounter >= 2 && _lastPopupThreshold < 2)
+        {
+            ShowPopUpText();
+            _lastPopupThreshold = 2;
+
+            Animator smallAnim = _smallBuilding.GetComponent<Animator>();
+            ScaleUpImage(smallAnim);
+        }
+    }
+
+    private void ScaleUpImage(Animator animator)
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("ScaleUp");
+        }
+    }
+    private void ShowPopUpText()
+    {
+        if (FloatingTextPrefab != null)
+        {
+            Instantiate(FloatingTextPrefab, _playerPosition.position+= new Vector3(0,5,0), Quaternion.identity, _playerPosition);
+
+        }
+    }
     private void PlayPlop()
     {
         if (Time.time - _lastPlopTime < plopCooldown)
@@ -121,12 +175,6 @@ public class TextPopUpManager : MonoBehaviour
 
         _playerModel.transform.localScale = baseScale;
     }
-    private void ShowPopUpText()
-    {
-        if (FloatingTextPrefab != null)
-        {
-            Instantiate(FloatingTextPrefab, _playerPosition.position, Quaternion.identity, _playerPosition);
-        }
-    }
  
+
 }

@@ -156,12 +156,12 @@ public class PullingMechanicOutside : MonoBehaviour
         //        Debug.Log("set off breakage");
         //    }
         //}
-        
+
 
         if (other != null && ValueManager.IsPullingStrongly)
         {
 
-            if (other != null  &&
+            if (other != null &&
       ValueManager.IsPullingStrongly &&
       !_list.Contains(other.gameObject))
             {
@@ -178,30 +178,30 @@ public class PullingMechanicOutside : MonoBehaviour
 
     public void CheckIfStrongEnough(Collider other)
     {
-        if (ValueManager.SizeCounter >= 3)
+        if (ValueManager.SizeCounter >= 8)
         {
             AddObjectUnderSize(60, other);
-            _rotationSpeed = 6;
-            
+            _rotationSpeed = 8;
 
+
+
+        }
+        else if (ValueManager.SizeCounter >= 6)
+        {
+            AddObjectUnderSize(40, other);
+            _rotationSpeed = 7;
 
         }
         else if (ValueManager.SizeCounter >= 2)
         {
-            AddObjectUnderSize(40, other);
-            _rotationSpeed = 5;
-
-        }
-        else if (ValueManager.SizeCounter >= 1)
-        {
             AddObjectUnderSize(20, other);
-            _rotationSpeed = 4;
+            _rotationSpeed = 6;
 
         }
         else if (ValueManager.SizeCounter >= 0)
         {
             AddObjectUnderSize(10, other);
-            _rotationSpeed = 2;
+            _rotationSpeed = 4;
 
         }
     }
@@ -219,7 +219,7 @@ public class PullingMechanicOutside : MonoBehaviour
             if (other.GetComponent<GetDestroyed>() != null)
             {
                 other.GetComponent<GetDestroyed>().SetOffExplosionAndDestruction();
-                Debug.Log("set off");
+              
             }
 
 

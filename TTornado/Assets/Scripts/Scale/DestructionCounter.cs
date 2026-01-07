@@ -25,8 +25,12 @@ public class DestructionCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.value = Mathf.Clamp01((float)ValueManager.DestructionCounter / ValueManager.MaxDestruction);
-        if (slider.value == 1)
+        float value = (float)ValueManager.DestructionCounter / ValueManager.MaxDestruction;
+        
+        slider.value = Mathf.Clamp01(value);
+
+
+        if (slider.value >= 1)
         {
             ValueManager.GameHasEnded = true;
         }

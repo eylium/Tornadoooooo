@@ -10,6 +10,8 @@ public class GameEnderScript : MonoBehaviour
     //[SerializeField] private Image _endImage;
     [SerializeField] private TMP_Text _timerText;
 
+    [SerializeField] private Image _endImage;
+
     private float _waitTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,7 +25,7 @@ public class GameEnderScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if (ValueManager.GameHasEnded)
         {
 
@@ -31,9 +33,14 @@ public class GameEnderScript : MonoBehaviour
 
             if (_waitTime >= 2)
             {
-                _endCanvas.gameObject.SetActive(true);
-                _timerText.text = $"Completion Time: {ValueManager.Timer}";
-                _waitTime = 0;
+                _endImage.GetComponent<Animator>().SetTrigger("FinalScale");
+
+                if (_waitTime >= 4)
+                {
+                    _endCanvas.gameObject.SetActive(true);
+                    _timerText.text = $"Completion Time: {ValueManager.Timer}";
+                    _waitTime = 0;
+                }
             }
             //float i = 0;
             //_endImage.color = new Color(1, 1, 1, i+=Time.deltaTime);

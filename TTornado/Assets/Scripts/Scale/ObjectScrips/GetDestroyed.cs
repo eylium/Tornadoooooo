@@ -7,6 +7,9 @@ public class GetDestroyed : MonoBehaviour
     [SerializeField]
     private GameObject IgnoreCollision;
 
+    //[SerializeField]
+    //private Collider PlayerDamage;
+
 
 
     public bool _hasExploded = false;
@@ -15,16 +18,7 @@ public class GetDestroyed : MonoBehaviour
 
     private int _objectCounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -42,25 +36,26 @@ public class GetDestroyed : MonoBehaviour
 
     private void CheckIfSized(float size, float colliderSize)
     {
-        if (size>= 3 && colliderSize<= 60)
+        if (size >= 8 && colliderSize <= 60)
         {
             SetOffExplosionAndDestruction();
         }
-        else if (size >= 2 &&  colliderSize<= 40)
-        {
-       
-            SetOffExplosionAndDestruction();
-        }
-        else if (size >= 1 && colliderSize<= 20)
+        else if (size >= 6 && colliderSize <= 40)
         {
 
             SetOffExplosionAndDestruction();
         }
-        else if (size >= 0&& colliderSize <= 10){
-    
+        else if (size >= 2 && colliderSize <= 20)
+        {
+
             SetOffExplosionAndDestruction();
         }
-      
+        else if (size >= 0 && colliderSize <= 10)
+        {
+
+            SetOffExplosionAndDestruction();
+        }
+
     }
 
     //private void OnTriggerEnter(Collider other)
@@ -82,14 +77,15 @@ public class GetDestroyed : MonoBehaviour
 
     //}
 
-  
+
     public void SetOffExplosionAndDestruction()
     {
         //Debug.Log("break");
-        Debug.Log("get broken");
+
         GetComponent<Breakable>().Break();
         if (ExplosionCenter != null)
         {
+
             //Debug.Log(gameObject.name);
             Explosion(ExplosionCenter.transform.position, 100, 20);
             Debug.Log("explode");
@@ -101,9 +97,29 @@ public class GetDestroyed : MonoBehaviour
     }
     private void Explosion(Vector3 center, float radius, float maxforce)
     {
+        //bool hasDamaged = false;
+        //if (hasDamaged == false)
+        //{
+        //    Collider[] otherColliders = Physics.OverlapSphere(center, 70);
+
+        //    foreach (Collider collider in otherColliders)
+        //    {
+        //        if (collider.gameObject.tag == "Player")
+        //        {
+        //            Debug.Log("beep");
+
+        //            if (ValueManager.DestructionCounter >= 40)
+        //            {
+        //                ValueManager.DestructionCounter -= 40;
+        //            }
+        //        }
+        //    }
+
+        //    hasDamaged = true;
+        //}
         ValueManager.HasExploded = true;
 
-
+        Debug.Log("explode");
         AudioManager.Instance.PlaySFX("Explosion");
         ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
 
@@ -126,8 +142,10 @@ public class GetDestroyed : MonoBehaviour
                 float distance = explosionDirection.magnitude;
                 float intensity = 1 - distance / radius;
                 float force = maxforce * intensity;
-
-                rigidbody.AddForce(explosionDirection * force, ForceMode.Impulse);
+                if (rigidbody != null)
+                {
+                    rigidbody.AddForce(explosionDirection * force, ForceMode.Impulse);
+                }
 
 
 
@@ -137,6 +155,17 @@ public class GetDestroyed : MonoBehaviour
         }
         //ParticleManager.Instance.StopParticles("Explosion");
 
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        if (ExplosionCenter != null)
+        {
+            Gizmos.DrawWireSphere(ExplosionCenter.transform.position, 70);
+        }
     }
     //private void GetJudgedByAmount(Collider other)
     //{

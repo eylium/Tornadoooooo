@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1029255854989560162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5432375804315957851}
+  - component: {fileID: 750604869402223416}
+  - component: {fileID: 4584373761596308274}
+  m_Layer: 0
+  m_Name: DamagePlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5432375804315957851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029255854989560162}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 43.8, z: 0}
+  m_LocalScale: {x: 262.14926, y: 181.32011, z: 185.40486}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3488357590495463304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &750604869402223416
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029255854989560162}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4584373761596308274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029255854989560162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db67d805ea8d4441bae877b700200c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5073453131060604684
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IgnoreCollision: {fileID: 7230165237805721456}
+  PlayerDamage: {fileID: 750604869402223416}
+  _hasExploded: 0
   ExplosionCenter: {fileID: 7294690013038717906}
 --- !u!114 &2145483917250946039
 MonoBehaviour:
@@ -159,6 +229,7 @@ Transform:
   - {fileID: 8426314925767796886}
   - {fileID: 8006666035488488906}
   - {fileID: 2672889689153727361}
+  - {fileID: 5432375804315957851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2491258601791982698
@@ -446,8 +517,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &6164873482701740753
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -514,8 +588,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &4162109356758085991
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -582,8 +659,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &3756173442210961560
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -655,8 +735,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &9184302665217488604
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -728,8 +811,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &5136974059442343571
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -796,8 +882,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &6779291885276312583
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -864,8 +953,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &6041513638484901417
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -932,8 +1024,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &822443791723352066
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1000,8 +1095,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &875960770308979106
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1068,8 +1166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &1297800343260320213
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1136,8 +1237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &5388273549530201869
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1204,8 +1308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f5faa1ba8dd0342a95176f945da2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destructionThreshold: 10
+  isPickedUp: 0
   IsThrown: 0
   _cantBeThrown: 0
+  _hasBeenPickedUp: 0
 --- !u!64 &5163764454067575720
 MeshCollider:
   m_ObjectHideFlags: 0

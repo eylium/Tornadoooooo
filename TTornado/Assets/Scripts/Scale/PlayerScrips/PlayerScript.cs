@@ -67,6 +67,11 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            ValueManager.HasExploded = false;
+            ValueManager.GameHasEnded = false;
+            ValueManager.DestructionCounter = 0;
+            ValueManager.SizeCounter = 0;
+            ValueManager.Timer = 0;
             SceneManager.LoadScene(0);
         }
 
@@ -74,7 +79,6 @@ public class PlayerScript : MonoBehaviour
         {
             Application.Quit();
         }
-
 
     }
 
