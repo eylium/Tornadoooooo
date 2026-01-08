@@ -38,6 +38,9 @@ public class TextPopUpManager : MonoBehaviour
     [SerializeField] private GameObject RedTextPopUpPrefab;
     [SerializeField] private GameObject PurpleTextPopUpPrefab;
 
+    [SerializeField] private TMP_Text _scoreDisplay;
+    private int _destructionScore;
+
     private float _timer;
     private float _destruction;
 
@@ -53,8 +56,6 @@ public class TextPopUpManager : MonoBehaviour
         _previousDestruction = ValueManager.DestructionCounter;
         _startSize = _player.transform.localScale;
         _startModelSize = _playerModel.transform.localScale;
-
-
     }
 
     // Update is called once per frame
@@ -70,6 +71,8 @@ public class TextPopUpManager : MonoBehaviour
         {
             //Debug.Log(_destruction);
             PutDestructionText();
+
+
             _timer -= 0.5f;
             //_destruction = 0;
         }
@@ -91,37 +94,54 @@ public class TextPopUpManager : MonoBehaviour
 
         CheckSize();
 
+        _scoreDisplay.text = $"Score: {_destructionScore}";
 
-      
 
     }
 
     private void PutDestructionText()
     {
-        if (_destruction >= 25)
+        if (_destruction >= 40)
         {
-            TextPopUp("25", PurpleTextPopUpPrefab);
-            _destruction -= 25f;    
+            _scoreDisplay.GetComponent<Animator>().SetTrigger("ScoreScale");
+            TextPopUp("40", PurpleTextPopUpPrefab);
+            _destructionScore += 40*3;
+            _destruction -= 40f;
+
+        }
+        else if (_destruction >= 30)
+        {
+            _scoreDisplay.GetComponent<Animator>().SetTrigger("ScoreScale");
+            TextPopUp("30", PurpleTextPopUpPrefab);
+            _destructionScore += 30*3;
+            _destruction -= 30f;
         }
         else if (_destruction >= 20)
         {
-            TextPopUp("20",PurpleTextPopUpPrefab);
+            _scoreDisplay.GetComponent<Animator>().SetTrigger("ScoreScale");
+            TextPopUp("20", PurpleTextPopUpPrefab);
+            _destructionScore += 20*3;
             _destruction -= 20f;
         }
         else if (_destruction >= 10)
         {
-            TextPopUp("10",PurpleTextPopUpPrefab);
+            _scoreDisplay.GetComponent<Animator>().SetTrigger("ScoreScale");
+            _destructionScore += 10 * 3;
+            TextPopUp("10", PurpleTextPopUpPrefab);
             _destruction -= 10;
         }
-        else if (_destruction >= 5)
+        else if (_destruction >= 5*2)
         {
+            _scoreDisplay.GetComponent<Animator>().SetTrigger("ScoreScale");
+            _destructionScore += 5;
             TextPopUp("5", RedTextPopUpPrefab);
             _destruction -= 5;
         }
         else if (_destruction >= 1)
         {
+            _destructionScore += 1;
             _destruction -= 1;
-            TextPopUp("1",TextPopUpPrefab);
+            TextPopUp("1", TextPopUpPrefab);
         }
     }
 
@@ -130,7 +150,7 @@ public class TextPopUpManager : MonoBehaviour
         float random = UnityEngine.Random.Range(-1, 1f);
         float random2 = UnityEngine.Random.Range(-1f, 1f);
         float random3 = UnityEngine.Random.Range(-1f, 1f);
-        Prefab.GetComponent<TMP_Text>().text = "+"+displayText;
+        Prefab.GetComponent<TMP_Text>().text = "+" + displayText;
 
         Instantiate(Prefab, _playerPosition.position + new Vector3(random, random2, random3), Quaternion.identity, _playerPosition);
 

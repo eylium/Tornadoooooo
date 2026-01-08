@@ -68,7 +68,7 @@ public class ItemBlockBehaviour : MonoBehaviour
             rb.AddForce(transform.forward * GetForce(), ForceMode.Impulse);
             _cantBeThrown = true;
 
-            isPickedUp = false;
+            //isPickedUp = false;
 
         }
 
@@ -123,7 +123,7 @@ public class ItemBlockBehaviour : MonoBehaviour
     public void SetParent(GameObject go, GameObject target)
     {
         _hasBeenPickedUp = true;
-        isPickedUp = true;
+        //isPickedUp = true;
         go.transform.SetParent(target.transform, true);
     }
 

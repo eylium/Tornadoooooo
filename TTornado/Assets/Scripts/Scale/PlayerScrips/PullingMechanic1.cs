@@ -109,6 +109,7 @@ public class PullingMechanicOutside : MonoBehaviour
                 {
 
                     gameObject?.transform.SetParent(null, true);
+                    gameObject.GetComponent<ItemBlockBehaviour>().isPickedUp = false;
                     int suckableLayer = LayerMask.NameToLayer("Suckable");
                     Physics.IgnoreLayerCollision(suckableLayer, suckableLayer, false);
 
@@ -192,6 +193,7 @@ public class PullingMechanicOutside : MonoBehaviour
             if (other.gameObject.layer == 3)
             {
                 _list.Add(other.gameObject);
+                other.GetComponent<ItemBlockBehaviour>().isPickedUp = true;
             }
 
             //if (other.GetComponent<ItemBlockBehaviour>()._hasBeenPickedUp == false)

@@ -7,7 +7,7 @@ public class DestroyCar : MonoBehaviour
     [SerializeField] private Collider _playerDamageCollider;
     [SerializeField] private GameObject _itemScript;
 
-    private bool _canDestroy;
+    //private bool _canDestroy;
 
     private bool hasExploded;
 
@@ -75,16 +75,6 @@ public class DestroyCar : MonoBehaviour
 
 
 
-        if (hasExploded == false)
-        {
-            AudioManager.Instance.sfxSource.volume = 0.01f;
-            AudioManager.Instance.PlaySFX("Explosion");
-            ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
-            Debug.Log("explodeeeeeeeeeeee");
-            AudioManager.Instance.sfxSource.volume = 0.2f;
-
-            hasExploded = true;
-        }
 
 
         Vector3 center = transform.position;
@@ -115,9 +105,19 @@ public class DestroyCar : MonoBehaviour
 
 
 
-            if (hitCollider.attachedRigidbody != null)
+            if (hitCollider.attachedRigidbody != null /*&& _canDestroy*/)
             {
 
+                if (hasExploded == false)
+                {
+                    AudioManager.Instance.sfxSource.volume = 0.01f;
+                    AudioManager.Instance.PlaySFX("Explosion");
+                    ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
+
+                    AudioManager.Instance.sfxSource.volume = 0.2f;
+
+                    hasExploded = true;
+                }
 
                 if (hitCollider.GetComponent<Breakable>() && hitCollider.name != "intact_nuclearPower" && hitCollider.name != "NuclearTrigger")
                 {
@@ -137,7 +137,10 @@ public class DestroyCar : MonoBehaviour
                 }
             }
         }
+        //if (_canDestroy)
+        // {
         Destroy(_ignoreCollision);
+        //}
     }
 
 
