@@ -17,6 +17,10 @@ public class GetDestroyed : MonoBehaviour
     private GameObject ExplosionCenter;
 
     private int _objectCounter;
+
+
+    private bool hasExploded;
+    private bool wasDestroyed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
@@ -83,13 +87,20 @@ public class GetDestroyed : MonoBehaviour
         //Debug.Log("break");
 
         GetComponent<Breakable>().Break();
-        AudioManager.Instance.PlaySFX("Breaking");
+    
+        if (wasDestroyed == false)
+        {
+            AudioManager.Instance.PlaySFX("Breaking");
+            ParticleManager.Instance.StartParticlesWP("Breaking",transform.position);
+            wasDestroyed = true;
+        }
+
         if (ExplosionCenter != null)
         {
 
             //Debug.Log(gameObject.name);
             Explosion(ExplosionCenter.transform.position, 100, 20);
-           
+
             _objectCounter = 0;
 
         }
@@ -120,9 +131,18 @@ public class GetDestroyed : MonoBehaviour
         //}
         ValueManager.HasExploded = true;
 
-  
-        AudioManager.Instance.PlaySFX("Explosion");
-        ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
+
+        if (hasExploded == false)
+        {
+            AudioManager.Instance.sfxSource.volume = 0.01f;
+            AudioManager.Instance.PlaySFX("Explosion");
+            ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
+            Debug.Log("explodeeeeeeeeeeee");
+            AudioManager.Instance.sfxSource.volume = 0.2f;
+
+            hasExploded = true;
+        }
+
 
 
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);

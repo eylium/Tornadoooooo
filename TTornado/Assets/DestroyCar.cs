@@ -9,6 +9,8 @@ public class DestroyCar : MonoBehaviour
 
     private bool _canDestroy;
 
+    private bool hasExploded;
+
     private float _destructionTimer;
 
     //private void FixedUpdate()
@@ -72,8 +74,17 @@ public class DestroyCar : MonoBehaviour
 
 
 
-        AudioManager.Instance.PlaySFX("Explosion");
-        ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
+
+        if (hasExploded == false)
+        {
+            AudioManager.Instance.sfxSource.volume = 0.01f;
+            AudioManager.Instance.PlaySFX("Explosion");
+            ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
+            Debug.Log("explodeeeeeeeeeeee");
+            AudioManager.Instance.sfxSource.volume = 0.2f;
+
+            hasExploded = true;
+        }
 
 
         Vector3 center = transform.position;

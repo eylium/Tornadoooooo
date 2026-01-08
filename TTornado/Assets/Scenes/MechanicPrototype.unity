@@ -3050,6 +3050,8 @@ MonoBehaviour:
     system: {fileID: 1326918407}
   - Name: Suction
     system: {fileID: 5008938040545598798}
+  - Name: Breaking
+    system: {fileID: 895907582}
 --- !u!4 &436870278
 Transform:
   m_ObjectHideFlags: 0
@@ -6398,6 +6400,11 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!198 &895907582 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8845349321333898320, guid: 163eff7accedf5f4e9e8be8057755998, type: 3}
+  m_PrefabInstance: {fileID: 982523681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &896222780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5749183576951152534, guid: e8a1859eca20e1746b75563abd299571, type: 3}
@@ -9856,13 +9863,17 @@ MonoBehaviour:
     clip: {fileID: 0}
   sfxSounds:
   - Name: Explosion
-    clip: {fileID: 8300000, guid: e93ef4029d2236c43bf1edf203de33e4, type: 3}
+    clip: {fileID: 8300000, guid: 8a7c3f945a535c44194c6613b2a0ea50, type: 3}
   - Name: Plop
     clip: {fileID: 8300000, guid: c358bc2f8f689664e831a05704b63a48, type: 3}
   - Name: Breaking
     clip: {fileID: 8300000, guid: 84bd863eb310e2a438ce78aa80d3c559, type: 3}
   - Name: BreakingBig
     clip: {fileID: 8300000, guid: fab3482112742774784b0f1fc089a770, type: 3}
+  - Name: Win
+    clip: {fileID: 8300000, guid: 7ca21aace37b30b47afb82edd2e36cc7, type: 3}
+  - Name: LevelUp
+    clip: {fileID: 8300000, guid: 8830f93b5f2f2ce408357f684923b2ae, type: 3}
   musicSource: {fileID: 1869625906}
   sfxSource: {fileID: 2016055958}
 --- !u!4 &1533034573
@@ -13639,7 +13650,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.829
+  m_Volume: 0.212
   m_Pitch: 1
   Loop: 0
   Mute: 0

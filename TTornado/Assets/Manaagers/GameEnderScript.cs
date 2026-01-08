@@ -12,6 +12,7 @@ public class GameEnderScript : MonoBehaviour
 
     [SerializeField] private Image _endImage;
 
+    private bool _hasPlayed;
     private float _waitTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,13 +38,17 @@ public class GameEnderScript : MonoBehaviour
 
                 if (_waitTime >= 4)
                 {
+                    if (_hasPlayed == false)
+                    {
+                        AudioManager.Instance.PlaySFX("Win");
+                        _hasPlayed = true;
+                    }
                     _endCanvas.gameObject.SetActive(true);
                     _timerText.text = $"Completion Time: {ValueManager.Timer}";
                     _waitTime = 0;
                 }
             }
-            //float i = 0;
-            //_endImage.color = new Color(1, 1, 1, i+=Time.deltaTime);
+
         }
     }
 }

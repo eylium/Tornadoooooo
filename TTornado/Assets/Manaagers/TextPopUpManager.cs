@@ -171,6 +171,8 @@ public class TextPopUpManager : MonoBehaviour
         {
             animator.SetTrigger("ScaleUp");
         }
+
+        AudioManager.Instance.PlaySFX("LevelUp");
     }
     private void ShowPopUpText()
     {
