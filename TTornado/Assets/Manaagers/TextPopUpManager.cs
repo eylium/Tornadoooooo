@@ -31,12 +31,19 @@ public class TextPopUpManager : MonoBehaviour
     private Vector3 _startSize;
     private float _targetScale = 1;
 
-
-
+    //text
     [SerializeField] private Transform _playerPosition;
+    [SerializeField] private GameObject FloatingTextPrefab;
+    [SerializeField] private GameObject TextPopUpPrefab;
+    [SerializeField] private GameObject RedTextPopUpPrefab;
+    [SerializeField] private GameObject PurpleTextPopUpPrefab;
 
-    [SerializeField]
-    private GameObject FloatingTextPrefab;
+    private float _timer;
+    private float _destruction;
+
+
+
+
 
     private bool _hasGrown;
 
@@ -56,18 +63,76 @@ public class TextPopUpManager : MonoBehaviour
     {
         _modelTargetScale = 1 + ValueManager.SizeCounter / 5;
         _targetScale = 1 + ValueManager.SizeCounter * 2f;
+        _timer += Time.deltaTime;
+        _destruction += ((float)ValueManager.DestructionCounter - _previousDestruction);
 
+        if (_timer >= 0.5f)
+        {
+            //Debug.Log(_destruction);
+            PutDestructionText();
+            _timer -= 0.5f;
+            //_destruction = 0;
+        }
 
         if (ValueManager.DestructionCounter != _previousDestruction)
         {
 
-            //ShowPopUpText();
+            //timer --> reset every 0.2 seconds
+            //if timer is resetting --> check how much you put up --> if it's bigger than 5 --> show 5 if its bigger than 10 --> show 10
+
+
+
+
+
             SizeUpPlayer();
             PlayPlop();
             _previousDestruction = ValueManager.DestructionCounter;
         }
 
         CheckSize();
+
+
+      
+
+    }
+
+    private void PutDestructionText()
+    {
+        if (_destruction >= 25)
+        {
+            TextPopUp("25", PurpleTextPopUpPrefab);
+            _destruction -= 25f;    
+        }
+        else if (_destruction >= 20)
+        {
+            TextPopUp("20",PurpleTextPopUpPrefab);
+            _destruction -= 20f;
+        }
+        else if (_destruction >= 10)
+        {
+            TextPopUp("10",PurpleTextPopUpPrefab);
+            _destruction -= 10;
+        }
+        else if (_destruction >= 5)
+        {
+            TextPopUp("5", RedTextPopUpPrefab);
+            _destruction -= 5;
+        }
+        else if (_destruction >= 1)
+        {
+            _destruction -= 1;
+            TextPopUp("1",TextPopUpPrefab);
+        }
+    }
+
+    private void TextPopUp(string displayText, GameObject Prefab)
+    {
+        float random = UnityEngine.Random.Range(-1, 1f);
+        float random2 = UnityEngine.Random.Range(-1f, 1f);
+        float random3 = UnityEngine.Random.Range(-1f, 1f);
+        Prefab.GetComponent<TMP_Text>().text = "+"+displayText;
+
+        Instantiate(Prefab, _playerPosition.position + new Vector3(random, random2, random3), Quaternion.identity, _playerPosition);
 
     }
 
@@ -79,7 +144,7 @@ public class TextPopUpManager : MonoBehaviour
             Animator biggestAnim = _biggestBuilding.GetComponent<Animator>();
             ScaleUpImage(biggestAnim);
 
-          
+
             _lastPopupThreshold = 8;
         }
         else if (ValueManager.SizeCounter >= 6 && _lastPopupThreshold < 6)
@@ -111,8 +176,7 @@ public class TextPopUpManager : MonoBehaviour
     {
         if (FloatingTextPrefab != null)
         {
-            Instantiate(FloatingTextPrefab, _playerPosition.position+= new Vector3(0,5,0), Quaternion.identity, _playerPosition);
-
+            Instantiate(FloatingTextPrefab, _playerPosition.position += new Vector3(0, 5, 0), Quaternion.identity, _playerPosition);
         }
     }
     private void PlayPlop()
@@ -134,7 +198,7 @@ public class TextPopUpManager : MonoBehaviour
         _player.transform.localScale = Vector3.Lerp(
             transform.localScale,
             _startSize * _targetScale,
-            Time.deltaTime * 5f);
+            Time.deltaTime * 10f);
 
 
 
@@ -175,6 +239,6 @@ public class TextPopUpManager : MonoBehaviour
 
         _playerModel.transform.localScale = baseScale;
     }
- 
+
 
 }

@@ -113,6 +113,7 @@ public class PlayerScript : MonoBehaviour
     private void Walking()
     {
 
+        ChangeSpeed();
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -144,10 +145,31 @@ public class PlayerScript : MonoBehaviour
 
 
 
-
-
     }
+    private void ChangeSpeed()
+    {
 
+        if (ValueManager.SizeCounter >= 8)
+        {
+
+            moveSpeed = 28f;
+        }
+        else if (ValueManager.SizeCounter >= 6)
+        {
+            moveSpeed = 25f;
+
+        }
+        else if (ValueManager.SizeCounter >= 2)
+        {
+
+            moveSpeed = 22;
+        }
+        else if (ValueManager.SizeCounter >= 0)
+        {
+            moveSpeed = 20f;
+
+        }
+    }
 
     //private void SizeUp()
     //{

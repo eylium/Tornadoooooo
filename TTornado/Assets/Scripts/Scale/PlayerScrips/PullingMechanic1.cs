@@ -40,14 +40,12 @@ public class PullingMechanicOutside : MonoBehaviour
 
 
     private GameObject _object;
-    //private GameObject[] _objectArray;
-
+  
     private List<GameObject> _list;
 
     private void Start()
     {
         _list = new List<GameObject>();
-
     }
     private void FixedUpdate()
     {
@@ -56,9 +54,6 @@ public class PullingMechanicOutside : MonoBehaviour
         if (ValueManager.HasExploded)
         {
             _explosionTimer += Time.deltaTime;
-
-
-
 
             ValueManager.IsPullingStrongly = false;
 
@@ -74,8 +69,7 @@ public class PullingMechanicOutside : MonoBehaviour
         }
 
         EnableParticles();
-        //transform.position = Vector3.MoveTowards(transform.position,new Vector3(0,0,0), _maxSpeed);
-        //
+
         if (ValueManager.IsPullingStrongly)
         {
             _vibrateTimer += Time.fixedDeltaTime;
@@ -91,11 +85,11 @@ public class PullingMechanicOutside : MonoBehaviour
                     gameObject.transform.right = connection;
 
 
-                    if (_vibrateTimer < 0.4f)
+                    if (_vibrateTimer < 0.5f)
                     {
                         gameObject.GetComponent<ItemBlockBehaviour>().Jitter(gameObject, _target, _maxSpeed, _vibrateTimer);
                     }
-                    if (_vibrateTimer > 0.4f)
+                    if (_vibrateTimer > 0.5f)
                     {
 
                         gameObject.GetComponent<ItemBlockBehaviour>().SetParent(gameObject, _target);
@@ -139,25 +133,11 @@ public class PullingMechanicOutside : MonoBehaviour
 
     private void SizeUpPlayer()
     {
-        //Debug.Log(((float)ValueManager.DestructionCounter/ValueManager.MaxDestruction)*5);
-        //ValueManager.SizeCounter += ((float)ValueManager.DestructionCounter/ValueManager.MaxDestruction)*5;
-
-        //Debug.Log(((float)ValueManager.DestructionCounter / ValueManager.MaxDestruction)*10);
         ValueManager.SizeCounter = ((float)ValueManager.DestructionCounter / ValueManager.MaxDestruction * 10);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        //if (ValueManager.IsPullingStrongly)
-        //{
-        //    if (other.GetComponent<GetDestroyed>() != null)
-        //    {
-        //        other.GetComponent<GetDestroyed>().SetOffExplosionAndDestruction();
-        //        Debug.Log("set off breakage");
-        //    }
-        //}
-
-
         if (other != null && ValueManager.IsPullingStrongly)
         {
 
@@ -166,14 +146,8 @@ public class PullingMechanicOutside : MonoBehaviour
       !_list.Contains(other.gameObject))
             {
                 CheckIfStrongEnough(other);
-
-
-
             }
-
         }
-
-
     }
 
     public void CheckIfStrongEnough(Collider other)
@@ -182,33 +156,26 @@ public class PullingMechanicOutside : MonoBehaviour
         {
             AddObjectUnderSize(60, other);
             _rotationSpeed = 8;
-
-
-
+           
         }
         else if (ValueManager.SizeCounter >= 6)
         {
             AddObjectUnderSize(40, other);
             _rotationSpeed = 7;
-
+         
         }
         else if (ValueManager.SizeCounter >= 2)
         {
             AddObjectUnderSize(20, other);
             _rotationSpeed = 6;
-
+         
         }
         else if (ValueManager.SizeCounter >= 0)
         {
             AddObjectUnderSize(10, other);
             _rotationSpeed = 4;
-
+           
         }
-    }
-
-    public void CheckColliderToDestroy(Collider other)
-    {
-
     }
 
     private void AddObjectUnderSize(float size, Collider other)
@@ -219,20 +186,13 @@ public class PullingMechanicOutside : MonoBehaviour
             if (other.GetComponent<GetDestroyed>() != null)
             {
                 other.GetComponent<GetDestroyed>().SetOffExplosionAndDestruction();
-              
+
             }
-
-
 
             if (other.gameObject.layer == 3)
             {
                 _list.Add(other.gameObject);
             }
-
-
-
-
-
 
             //if (other.GetComponent<ItemBlockBehaviour>()._hasBeenPickedUp == false)
             //{
@@ -256,13 +216,5 @@ public class PullingMechanicOutside : MonoBehaviour
             ParticleManager.Instance.StopParticles("Suction");
         }
     }
-
-
-
     public static float InExpo(float t) => (float)Mathf.Pow(2, 10 * (t - 1));
-
-
-
-
-
 }

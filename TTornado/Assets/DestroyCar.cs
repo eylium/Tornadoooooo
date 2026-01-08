@@ -7,6 +7,8 @@ public class DestroyCar : MonoBehaviour
     [SerializeField] private Collider _playerDamageCollider;
     [SerializeField] private GameObject _itemScript;
 
+    private bool _canDestroy;
+
     private float _destructionTimer;
 
     //private void FixedUpdate()
@@ -24,16 +26,16 @@ public class DestroyCar : MonoBehaviour
     //}
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if (other != null && other.gameObject.layer != 8 & other.gameObject.layer != 6 & other.gameObject.layer != 7 && other != _ignoreCollision && other != _secondIgnoreCollision)
         {
-           SetOffExplosion();
+            SetOffExplosion();
         }
     }
 
     private void SetOffExplosion()
     {
-       
+
         //bool hasDamaged = false;
         //if (hasDamaged == false)
         //{
@@ -78,9 +80,30 @@ public class DestroyCar : MonoBehaviour
         float radius = 20f;
         float maxforce = 10f;
 
+
+
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
         foreach (Collider hitCollider in hitColliders)
         {
+            //if (hitCollider.GetComponent<ItemBlockBehaviour>() != null)
+            //{
+            //    if (hitCollider.GetComponent<ItemBlockBehaviour>().isPickedUp)
+            //    {
+
+            //        _canDestroy = false;
+            //    }
+            //    else
+            //    {
+            //        if (hitCollider != _ignoreCollision)
+            //        {
+            //            Debug.Log(hitCollider.GetComponent<ItemBlockBehaviour>().isPickedUp + " " + hitCollider.name);
+            //            _canDestroy = true;
+            //        }
+            //    }
+            //}
+
+
+
             if (hitCollider.attachedRigidbody != null)
             {
 

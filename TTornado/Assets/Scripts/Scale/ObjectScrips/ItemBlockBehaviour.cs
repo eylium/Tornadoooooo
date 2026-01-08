@@ -80,23 +80,23 @@ public class ItemBlockBehaviour : MonoBehaviour
     {
         if (ValueManager.SizeCounter >= 3)
         {
-            return 80;
+            return 120;
 
 
         }
         else if (ValueManager.SizeCounter >= 2)
         {
-            return 70;
+            return 90;
 
         }
         else if (ValueManager.SizeCounter >= 1)
         {
-            return 60;
+            return 80;
 
         }
         else if (ValueManager.SizeCounter >= 0)
         {
-            return 30;
+            return 40;
 
         }
         return 0;
@@ -129,6 +129,7 @@ public class ItemBlockBehaviour : MonoBehaviour
 
     public void Jitter(GameObject go, GameObject target, float maxSpeed, float vibrateTimer)
     {
+      
 
         float vibrateRange = Random.Range(-5 * Time.fixedDeltaTime, 5 * Time.fixedDeltaTime);
         Vector3 vibratePosition = gameObject.transform.position;

@@ -83,12 +83,13 @@ public class GetDestroyed : MonoBehaviour
         //Debug.Log("break");
 
         GetComponent<Breakable>().Break();
+        AudioManager.Instance.PlaySFX("Breaking");
         if (ExplosionCenter != null)
         {
 
             //Debug.Log(gameObject.name);
             Explosion(ExplosionCenter.transform.position, 100, 20);
-            Debug.Log("explode");
+           
             _objectCounter = 0;
 
         }
@@ -119,7 +120,7 @@ public class GetDestroyed : MonoBehaviour
         //}
         ValueManager.HasExploded = true;
 
-        Debug.Log("explode");
+  
         AudioManager.Instance.PlaySFX("Explosion");
         ParticleManager.Instance.StartParticlesWP("Explosion", transform.position);
 
